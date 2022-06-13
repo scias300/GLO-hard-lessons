@@ -2,8 +2,17 @@
 
 const out = document.querySelector('.out');
 let now = new Date();
-const week = ['Воскресенье', 'Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота',];
-const months = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
+
+let weekDay = now.toLocaleString('ru', { weekday: 'long' })[0].toUpperCase() + now.toLocaleString('ru', { weekday: 'long' }).slice(1);
+
+let getMonth = function () {
+    let month = now.toLocaleString('ru', { month: 'long' });
+    if (month === 'март' || month === 'август') {
+        return now.toLocaleString('ru', { month: 'long' }) + 'а';
+    } else {
+        return now.toLocaleString('ru', { month: 'long' }).slice(0, -1) + 'я';
+    }
+};
 
 let getHours = function () {
     let hour = now.getHours();
@@ -66,11 +75,11 @@ let getZeros = function (number) {
     return number;
 };
 
-out.innerHTML = `Сегодня ${week[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${getHours()} ${getMinutes()} ${getSeconds()}<br>`;
+out.innerHTML = `Сегодня ${weekDay}, ${now.getDate()} ${getMonth()} ${getHours()} ${getMinutes()} ${getSeconds()}<br>`;
 out.innerHTML += `${getZeros(now.getDate())}.${getZeros(now.getMonth())}.${now.getFullYear()} - ${getZeros(now.getHours())}:${getZeros(now.getMinutes())}:${getZeros(now.getSeconds())}`;
 
 setInterval(function () {
     now = new Date();
-    out.innerHTML = `Сегодня ${week[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${getHours()} ${getMinutes()} ${getSeconds()}<br>`;
+    out.innerHTML = `Сегодня ${weekDay}, ${now.getDate()} ${getMonth()} ${getHours()} ${getMinutes()} ${getSeconds()}<br>`;
     out.innerHTML += `${getZeros(now.getDate())}.${getZeros(now.getMonth())}.${now.getFullYear()} - ${getZeros(now.getHours())}:${getZeros(now.getMinutes())}:${getZeros(now.getSeconds())}`;
 }, 1000);
